@@ -1,0 +1,7 @@
+.env
+.passkey_ok
+bot.log
+remindlist.json
+ping_on_join.json
+__pycache__/
+*.py[cod]

@@ -1,0 +1,24 @@
+{
+  "embed_color": "#A30000",
+  "ping_on_join": {
+    "default_deletion_delay_seconds": 1,
+    "authorized_role_id": 1572046802373582948
+  },
+  "say": {
+    "authorized_user_ids": [1253736765986967622]
+  },
+  "purge": {
+    "staff_role_id": 1573818100246126703
+  },
+  "ticket_intro": {
+    "customer_service_role_id": 1573817668174225528,
+    "message": "Hey there! I'm **{ping}** with the **Customer Service Department** here at coldd. I'll be assisting you with your ticket today."
+  },
+  "reminders": {
+    "image_url": "https://media.discordapp.net/attachments/1515483025637638265/1538238059454402624/d8c817a23c26e210e116bcf2997f86df.jpg?ex=6afc8ed4&is=6afb3d54&hm=dc7a007cc95b6abcedf6381a9e788de08cad6131d642b1304ba0d43218021b55&format=webp"
+  },
+  "welcomer": {
+    "channel_id": 1538217607210213416,
+    "image_url": "https://media.discordapp.net/attachments/1515483025637638265/1538238059454402624/d8c817a23c26e210e116bcf2997f86df.jpg?ex=6afc8ed4&is=6afb3d54&hm=dc7a007cc95b6abcedf6381a9e788de08cad6131d642b1304ba0d43218021b55&format=webp"
+  }
+}
