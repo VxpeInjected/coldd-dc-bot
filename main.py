@@ -8,6 +8,11 @@ import logging
 from pathlib import Path
 from colorama import Fore, init
 
+# Print each line straight away. Without a terminal (hosting panels) Python
+# buffers stdout, so status lines would only show up much later or never.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(line_buffering=True)
+
 # Initialize colorama for Windows CMD
 init(autoreset=True)
 
@@ -52,7 +57,14 @@ passkeyFile = Path(".passkey_ok")
 # --- PASSKEY SYSTEM ---
 if passwordNeeded:
     if not passkeyFile.exists():
-        enteredKey = input("Enter bot passkey: ").strip()
+        if not passkey:
+            print("[ERROR] passkey is missing from the environment or .env file.")
+            print("[SYSTEM ASSISTANT] Add a line like passkey=yourkey to .env, then start the bot again.")
+            sys.exit(1)
+        # The prompt goes on its own line: hosting consoles (Cybrancee) only
+        # show finished lines, so an inline input() prompt stays invisible.
+        print("Enter bot passkey (type it in the console and press Enter):", flush=True)
+        enteredKey = input().strip()
         if enteredKey != passkey:
             print("\n[ERROR] Passkey was invalid.\n")
             print("[SYSTEM ASSISTANT] Please contact the bot owner to get the correct passkey.")
