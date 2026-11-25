@@ -11,11 +11,15 @@ from colorama import Fore, init
 # Initialize colorama for Windows CMD
 init(autoreset=True)
 
+# Full log goes to bot.log; warnings and crashes also go to the console so a
+# hosting panel (Cybrancee) shows why the bot stopped.
+logFileHandler = logging.FileHandler("bot.log", encoding="utf-8")
+logConsoleHandler = logging.StreamHandler()
+logConsoleHandler.setLevel(logging.WARNING)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s %(levelname)s %(name)s: %(message)s",
-    filename="bot.log",
-    encoding="utf-8",
+    handlers=[logFileHandler, logConsoleHandler],
     force=True,
 )
 
