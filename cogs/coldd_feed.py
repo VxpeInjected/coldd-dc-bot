@@ -63,6 +63,9 @@ class ColddFeed(commands.Cog):
             int(cfg["purchases_channel_id"]): "purchases",
             int(cfg["reviews_channel_id"]): "reviews",
         }
+        # Parcel's purchase log in coldd's old server: read for history only.
+        for channel_id in cfg.get("history_channel_ids") or []:
+            self.channels[int(channel_id)] = "old purchases"
         self.key = _load_key()
         self.fingerprint = _fingerprint(self.key)
         self.session: aiohttp.ClientSession | None = None

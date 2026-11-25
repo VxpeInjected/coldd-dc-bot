@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv as loadDotenv
 import asyncio
 import sys
+import threading
 import logging
 from pathlib import Path
 from colorama import Fore, init
@@ -145,12 +146,33 @@ async def on_ready():
         restartPromptTask = asyncio.create_task(restart_prompt())
 
 # --- RESTART PROMPT ---
-async def restart_prompt():
-    while True:
-        restartBot = await asyncio.to_thread(input, """
+RESTART_PROMPT = """
     If at any point you wish to restart the bot, type 'yes'.
     If you type no, this prompt will reappear and the bot will continue to function normally.
-        :""")
+        :"""
+
+
+def read_console_line(loop, future):
+    try:
+        line = input(RESTART_PROMPT)
+    except EOFError:
+        line = None
+    try:
+        loop.call_soon_threadsafe(lambda: future.done() or future.set_result(line))
+    except RuntimeError:
+        pass
+
+
+async def restart_prompt():
+    loop = asyncio.get_running_loop()
+    while True:
+        # A daemon thread waits for the console line: a thread from asyncio's own pool
+        # kept the process alive for minutes when the panel stopped or restarted it.
+        future = loop.create_future()
+        threading.Thread(target=read_console_line, args=(loop, future), daemon=True).start()
+        restartBot = await future
+        if restartBot is None:
+            return
 
         print("")
         if restartBot.strip().lower() == "yes":
@@ -193,3 +215,7 @@ if __name__ == "__main__":
     except Exception:
         logging.getLogger(__name__).exception("Bot stopped unexpectedly")
         sys.exit(1)
+    # Stop at once when the panel stops the bot, whatever threads are still waiting.
+    logging.shutdown()
+    sys.stdout.flush()
+    os._exit(0)
