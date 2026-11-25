@@ -7,6 +7,7 @@ import sys
 import logging
 from pathlib import Path
 from colorama import Fore, init
+import updater
 
 # Print each line straight away. Without a terminal (hosting panels) Python
 # buffers stdout, so status lines would only show up much later or never.
@@ -27,6 +28,9 @@ logging.basicConfig(
     handlers=[logFileHandler, logConsoleHandler],
     force=True,
 )
+
+# New commits on GitHub are downloaded before the bot starts (see updater.py).
+updater.check_at_start()
 
 intents = discord.Intents.default()
 intents.members = True

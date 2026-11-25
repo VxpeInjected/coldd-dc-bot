@@ -1,5 +1,17 @@
 {
   "embed_color": "#A30000",
+  "auto_update": {
+    "enabled": true,
+    "repo": "VxpeInjected/coldd-dc-bot",
+    "branch": "main",
+    "check_minutes": 2
+  },
+  "coldd_feed": {
+    "endpoint": "https://ekinmytmudjwfaqaqswp.supabase.co/functions/v1/platform-sales-ingest",
+    "purchases_channel_id": 1254069976437096529,
+    "reviews_channel_id": 1247416021862711398,
+    "check_minutes": 5
+  },
   "ping_on_join": {
     "default_deletion_delay_seconds": 1,
     "authorized_role_id": 1572046802373582948

@@ -5,3 +5,6 @@ remindlist.json
 ping_on_join.json
 __pycache__/
 *.py[cod]
+.coldd_key
+.bot_update.json
+*.tmp-update
